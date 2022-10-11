@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --orange-color: rgb(255, 115, 0)
+}
+
+.orange-background {
+    background-color: var(--orange-color);
+}
+.orange-border {
+    border-color: var(--orange-color);
+}
+.orange-text {
+    color: var(--orange-color);
+}
+
+.block-centered:before {
+    content: '';
+    display: block;
+    height: calc(50vh - 73px);
+}
