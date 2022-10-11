@@ -1,54 +1,48 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
+import ListCommitsItem from "./ListCommitsItem";
+import {IRepos} from "../models/IRepos";
 
 
-const generalTableStyle = {
-    paddingRight: 5,
-    paddingBottom: 5,
-    paddingTop: 5
-}
-
-const tableTitle = {
-    fontSize: 25
-}
-const titleTable = {
-    verticalAlign: ''
-}
 
 const ListCommits = () => {
     let navigate = useNavigate();
-    const routeChange = () =>{
-        let path = `mayrveda-html/commits`;
-        navigate(path);
-    }
+    const [repos, setRepos] = useState<IRepos[]>([
+        { id: 1, name: 'mayrveda-html', html_url: '123', language: 'HTML', description: 'mayrvedaHtml mayrvedaHtml mayrvedaHtml mayrvedaHtml', stargazers_count: 0},
+        { id: 2, name: 'mayrveda-html2', html_url: '123', language: 'HTML2', description: 'mayrvedaHtml mayrvedaHtml mayrvedaHtml mayrvedaHtml', stargazers_count: 2},
+    ])
     return (
         <div>
-            <div>Вернуться к поиску</div>
+            <button onClick={() => navigate('/')}>Вернуться к поиску</button>
             <div>Repos</div>
             <div>
-                <table className='w-full text-left border-collapse bg-white'>
-                    <thead className='shadow-sm'>
-                    <tr>
+                <table className='w-full text-left border-collapse bg-white '>
+                <thead className='shadow-sm'>
+                <tr>
                     <th className='p-0'>
-                        <div className='py-4 pr-2 pl-2  border-slate-200 text-xs sticky uppercase text-stone-600'>Автор</div>
+                        <div className='py-4 pr-2 pl-2  border-slate-200 text-xs	sticky uppercase text-stone-600'>Title</div>
                     </th>
                     <th className='p-0'>
-                        <div className='py-4 pr-2  border-slate-200 text-xs	sticky uppercase text-stone-600'>Хэш коммита</div>
+                        <div className='py-4 pr-2  border-slate-200 text-xs	sticky uppercase text-stone-600'>Language</div>
                     </th>
                     <th className='p-0'>
-                        <div className='py-4 pr-2  border-slate-200 text-xs	sticky uppercase text-stone-600'>Дата в формате iso8601 (YYYY-MM-DD)</div>
+                        <div className='py-4 pr-2  border-slate-200 text-xs	sticky uppercase text-stone-600'>Overview</div>
                     </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr onClick={routeChange} className='shadow-sm cursor-pointer group relative hover:bg-orange-50'>
-                        <td className='p-0'> <div className='py-6 pr-2 pl-2 text-sm font-bold text-gray-800 group-hover:text-orange-500 group-hover:underline'>mayrveda-html</div>
-                        </td>
-                        <td className='p-0'><div className='py-6 pr-2 text-sm '>HTML</div></td>
-                        <td className='p-0'><div className='py-6 pr-2 text-sm'>2022-10-09</div></td>
-                    </tr>
-                    </tbody>
-                </table>
+                    <th className='p-0'>
+                        <div className='py-4 pr-2 border-slate-200 text-xs	sticky uppercase text-stone-600'>Stars</div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {
+                    repos.map((repo) =>
+                        <ListCommitsItem
+                            repo={repo}
+                            key={repo.id}/>)
+                }
+                </tbody>
+            </table>
+
             </div>
         </div>
     );

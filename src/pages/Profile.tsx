@@ -1,7 +1,8 @@
 import React from 'react';
 import {Route, Routes} from "react-router-dom";
 import ListCommits from "../components/ListCommits";
-import Commit from "../components/Commit";
+import DetailCommit from "../components/DetailCommit";
+import {useAppSelector} from "../hooks/redux";
 
 const Profile = () => {
     return (
@@ -18,7 +19,7 @@ const Profile = () => {
                 <div className='w-full'>
                     <Routes>
                         <Route path={'/'} element={<ListCommits/>}/>
-                        <Route path={'/:repo/commits'} element={<Commit/>}/>
+                        <Route path={'/:repo/commits'} element={<DetailCommit/>}/>
                     </Routes>
                 </div>
                 </div>
