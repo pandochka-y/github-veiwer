@@ -1,19 +1,42 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {fetchUser} from "../store/modules/User/ActionCreators";
+import {useAppDispatch, useAppSelector} from "../hooks/redux";
+import {useNavigate} from "react-router-dom";
+import {clearRedirect} from "../store/modules/User/UserSlice";
 
 const Search = () => {
+    const [login, setLogin] = useState('');
+    const {user, redirectTo, error} = useAppSelector(state => state.user)
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+    const handlerKeys = (e:React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            submitForm()
+        }
+    }
+    const submitForm = () => {
+        if (!login) return false;
+        dispatch(fetchUser(login))
+    }
+    useEffect(() => {
+        if (redirectTo) {
+            navigate(`/user/${redirectTo}`)
+        }
+        return () => {
+            console.log(user, 'unmount')
+            dispatch(clearRedirect())
+        }
+    }, [redirectTo])
+
     return (
         <div className="container mx-auto max-w-4xl block-centered">
-            <form className="border-solid  border border-gray-400 rounded-lg mx-auto mb-8 flex content-center">
-                <label
-                    className="w-full input 	">
-                    <input placeholder="Search for Git..."
+            <div className="border-solid  border border-gray-400 rounded-lg mx-auto mb-8 flex content-center">
+                <label className="w-full input">
+                    <input onKeyDown={event => handlerKeys(event)} onChange={(e) => setLogin(e.target.value)} placeholder="Search for Git..."
                            className="bg-transparent border-opacity-0 rounded-lg w-full p-4 h-full"/>
                 </label>
                 <div className='p-4 flex justify-center'>
-                    <button
-                        className="rounded-lg flex items-center px-3 py-2 text-white orange-background"
-
-                    >
+                    <button onClick={submitForm} className="rounded-lg flex items-center px-3 py-2 text-white orange-background">
                         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
                              xmlns="http://www.w3.org/2000/svg" className="mr-1.5">
                             <path
@@ -23,26 +46,28 @@ const Search = () => {
                         Go!
                     </button>
                 </div>
-            </form>
-
-            <div className='border-t pt-16'>
-                {/*<div className='flex justify-center'>Начинайте искать...</div>*/}
-
-                <div className='flex content-center border cursor-pointer'>
-                    <div className='mr-5'>
-                        <img className='h-20 w-20 rounded-lg' src="https://avatars.githubusercontent.com/u/74931559?v=4" alt=""/>
-                    </div>
-                    <div>
-                        <div>
-                            pandochka-y
-                        </div>
-                        <div>21 commits</div>
-                    </div>
-                    <div className='ml-auto flex'>
-                        <button className='rounded-lg  flex items-center self-center px-3 py-2 border orange-border orange-text'>View</button>
-                    </div>
-                </div>
             </div>
+            {error &&
+                <div>{error}</div>
+            }
+            {/*<div className='border-t pt-16'>*/}
+            {/*    /!*<div className='flex justify-center'>Начинайте искать...</div>*!/*/}
+
+            {/*    <div className='flex content-center border cursor-pointer'>*/}
+            {/*        <div className='mr-5'>*/}
+            {/*            <img className='h-20 w-20 rounded-lg' src="https://avatars.githubusercontent.com/u/74931559?v=4" alt=""/>*/}
+            {/*        </div>*/}
+            {/*        <div>*/}
+            {/*            <div>*/}
+            {/*                pandochka-y*/}
+            {/*            </div>*/}
+            {/*            <div>21 commits</div>*/}
+            {/*        </div>*/}
+            {/*        <div className='ml-auto flex'>*/}
+            {/*            <button className='rounded-lg  flex items-center self-center px-3 py-2 border orange-border orange-text'>View</button>*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
 
         </div>
     );

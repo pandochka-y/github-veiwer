@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {useNavigate} from "react-router-dom";
 import {IRepos} from "../models/IRepos";
 
@@ -6,7 +6,7 @@ interface IProps {
     repo: IRepos
 }
 
-const ListCommitsItem: React.FC<IProps> = ({repo}) => {
+const ListCommitsItem: FC<IProps> = ({repo}) => {
     let navigate = useNavigate();
     const routeToRepoCommits = () => {
         let path = `${ repo.name }/commits`;

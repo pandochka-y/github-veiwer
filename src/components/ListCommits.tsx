@@ -1,19 +1,22 @@
-import React, {useState} from 'react';
+import React, {FC, useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import ListCommitsItem from "./ListCommitsItem";
 import {IRepos} from "../models/IRepos";
+import {useAppSelector} from "../hooks/redux";
 
+interface IProps {
+    navigate: () => void
+}
 
-
-const ListCommits = () => {
-    let navigate = useNavigate();
+const ListCommits: FC<IProps> = ({navigate}) => {
+    const {user} = useAppSelector(state => state.user)
     const [repos, setRepos] = useState<IRepos[]>([
         { id: 1, name: 'mayrveda-html', html_url: '123', language: 'HTML', description: 'mayrvedaHtml mayrvedaHtml mayrvedaHtml mayrvedaHtml', stargazers_count: 0},
         { id: 2, name: 'mayrveda-html2', html_url: '123', language: 'HTML2', description: 'mayrvedaHtml mayrvedaHtml mayrvedaHtml mayrvedaHtml', stargazers_count: 2},
     ])
     return (
         <div>
-            <button onClick={() => navigate('/')}>Вернуться к поиску</button>
+            <button onClick={navigate}>Вернуться к поиску</button>
             <div>Repos</div>
             <div>
                 <table className='w-full text-left border-collapse bg-white '>

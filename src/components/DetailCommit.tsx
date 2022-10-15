@@ -2,10 +2,10 @@ import React from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 
 const DetailCommit = () => {
-    const params = useParams()
+    const {login} = useParams()
     const navigate = useNavigate()
     const routeBackToProfile = () => {
-        let path = `/user/${params.user}`;
+        let path = `/user/${login}`;
         navigate(path);
     }
     return (

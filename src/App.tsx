@@ -12,7 +12,7 @@ function App() {
             <Header/>
             <Routes>
                 <Route path={'/'} element={<Search/>}/>
-                <Route path={'/user/:user/*'} element={<Profile/>}/>
+                <Route path={'/user/:login/*'} element={<Profile/>}/>
             </Routes>
         </Router>
 );
